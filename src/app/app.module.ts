@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CourseCardComponent } from './course-card/course-card.component';
+import { CourseImageComponent } from './course-image/course-image.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { CourseCardComponent } from './course-card/course-card.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    CourseCardComponent
+    CourseCardComponent,
+    CourseImageComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

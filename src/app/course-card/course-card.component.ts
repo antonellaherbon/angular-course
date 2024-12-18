@@ -1,6 +1,7 @@
-import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList } from '@angular/core';
 import { Course } from '../model/course';
 import { CommonModule } from '@angular/common';
+import { CourseImageComponent } from '../course-image/course-image.component';
 
 @Component({
   selector: 'course-card',
@@ -9,32 +10,49 @@ import { CommonModule } from '@angular/common';
   styleUrl: './course-card.component.css',
   standalone: true
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   @Input({
     required: true
   }) course: Course;
-
+  
   @Input({
     required: true
   }) index: number
-
+  
   @Input() cardIndex: number;
-
+  
   @Output()
   courseSelected = new EventEmitter<Course>();
+  
+  
+  //@ContentChild --> decorator used to query for a single content element or component that is projected into the component's content area (via ng-content). 
+  // @ContentChild(CourseImageComponent, {read: ElementRef})
+  // image: ElementRef;
+  
 
+  //@ContentChildren --> decorator used to query for multiple elements or child components that are projected into a component’s content area via the ng-content directive
+  @ContentChildren(CourseImageComponent)
+  images: QueryList<CourseImageComponent>;
+  
   onCourseViewed() {
     console.log("clicked")
     this.courseSelected.emit(this.course);
   }
-
+  
   cardClasses() {
     if (this.course.category == "BEGINNER") {
       return 'begginer';
     }
   }
-
+  
   cardStyles() {
     return { 'text-decoration': 'underline' };
+  }
+  
+  ngAfterViewInit() {
+    // console.log(this.image);
+  }
+  ngAfterContentInit(): void {
+    console.log(this.images)
   }
 }

@@ -1,7 +1,6 @@
 <div class="top-menu">
 
-    <img class="logo"
-         src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
+    <img class="logo" src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
 
 </div>
 
@@ -18,18 +17,17 @@
 <button (click)="onCourseEdited()">Edit Courses</button>
 <div class="courses" #container>
     @for(course of courses; track course.id; let first = $first; let last = $last){
-        <course-card #cardRef
+    <course-card #cardRef 
         (courseSelected)="onCoureSelected($event)" 
-        [class.is-first]="first"
+        [class.is-first]="first" 
         [class.is-last]="last"
-        [course]="course"
-        />
+        [course]="course">
+            <course-image [src]="course.iconUrl"></course-image>
+    </course-card>
     }
     @empty{
-        <h1>No courses found!</h1>
+    <h1>No courses found!</h1>
     }
 
-    
+
 </div>
-
-
