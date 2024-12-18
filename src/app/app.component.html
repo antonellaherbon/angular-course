@@ -23,7 +23,7 @@
     </ng-template>
 
     
-    <course-card #cardRef 
+    <course-card #cardRef [highlighted]="true"
         (courseSelected)="onCoureSelected($event)" 
         [class.is-first]="first" 
         [class.is-last]="last"
@@ -35,6 +35,5 @@
     @empty{
     <h1>No courses found!</h1>
     }
-
 
 </div>

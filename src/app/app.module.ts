@@ -7,15 +7,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { CourseImageComponent } from './course-image/course-image.component';
 
+import { HighlightedDirective } from './directives/highlighted.directive';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     CourseCardComponent,
-    CourseImageComponent
+    CourseImageComponent,
+    HighlightedDirective
   ],
   providers: [],
   bootstrap: [AppComponent]
