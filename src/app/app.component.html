@@ -5,23 +5,30 @@
 
 </div>
 
+<!-- pipes -->
+<!-- <div class="demo">
+    <div>Start Date: {{startDate | date: 'MM/dd/YYYY' }}</div>
+    <div>{{title | uppercase}}</div>
+    {{courses | json}} 
+     <div *ngFor="let pair of course | keyvalue">
+        {{pair.key + ': ' +pair.value}}
+     </div>
+</div> -->
 
 <div class="courses">
+    @for(course of courses; track course.id; let first = $first; let last = $last){
+        <course-card 
+        (courseSelected)="onCoureSelected($event)" 
+        [class.is-first]="first"
+        [class.is-last]="last"
+        [course]="course"
+        />
+    }
+    @empty{
+        <h1>No courses found!</h1>
+    }
 
-    <div class="course-card">
-
-        <div class="course-title">
-            Angular Core Deep Dive
-        </div>
-        <img width="300" alt="Angular Logo"
-             src="https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png">
-
-        <div class="course-description">
-            A detailed walk-through of the most important part of Angular - the Core and Common modules.
-        </div>
-
-    </div>
-
+    
 </div>
 
 
