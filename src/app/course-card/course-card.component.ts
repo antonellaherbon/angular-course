@@ -18,6 +18,8 @@ export class CourseCardComponent {
     required: true
   }) index: number
 
+  @Input() cardIndex: number;
+
   @Output()
   courseSelected = new EventEmitter<Course>();
 

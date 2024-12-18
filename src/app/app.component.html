@@ -15,9 +15,10 @@
      </div>
 </div> -->
 
-<div class="courses">
+<button (click)="onCourseEdited()">Edit Courses</button>
+<div class="courses" #container>
     @for(course of courses; track course.id; let first = $first; let last = $last){
-        <course-card 
+        <course-card #cardRef
         (courseSelected)="onCoureSelected($event)" 
         [class.is-first]="first"
         [class.is-last]="last"
