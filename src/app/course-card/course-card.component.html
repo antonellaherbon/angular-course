@@ -10,7 +10,7 @@
         *ngIf="course.iconUrl; else noImage"></ng-content>
 
     <ng-template #noImage>
-        <ng-container *ngTemplateOutlet="noImageTpl"></ng-container>
+        <ng-container *ngTemplateOutlet="noImageTpl; context: {description: course.description}"></ng-container>
     </ng-template>
     <!-- @if(course.iconUrl){
         <img width="300" alt="Angular Logo" [src]="course.iconUrl">
