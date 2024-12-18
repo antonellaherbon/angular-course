@@ -17,11 +17,18 @@
 <button (click)="onCourseEdited()">Edit Courses</button>
 <div class="courses" #container>
     @for(course of courses; track course.id; let first = $first; let last = $last){
+    <ng-template #blankImage let-courseName="description">
+        <p class="warn"> {{courseName}} has no image available!</p>
+        <img src="/assets/empty-image.png" alt="Empty Image">
+    </ng-template>
+
+    
     <course-card #cardRef 
         (courseSelected)="onCoureSelected($event)" 
         [class.is-first]="first" 
         [class.is-last]="last"
-        [course]="course">
+        [course]="course"
+        [noImageTpl]="blankImage">
             <course-image [src]="course.iconUrl"></course-image>
     </course-card>
     }

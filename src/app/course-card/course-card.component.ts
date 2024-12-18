@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef } from '@angular/core';
 import { Course } from '../model/course';
 import { CommonModule } from '@angular/common';
 import { CourseImageComponent } from '../course-image/course-image.component';
@@ -24,6 +24,8 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   @Output()
   courseSelected = new EventEmitter<Course>();
   
+  @Input()
+  noImageTpl: TemplateRef<any>;
   
   //@ContentChild --> decorator used to query for a single content element or component that is projected into the component's content area (via ng-content). 
   // @ContentChild(CourseImageComponent, {read: ElementRef})
