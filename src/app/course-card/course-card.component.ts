@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
 import { Course } from '../model/course';
 import { CommonModule } from '@angular/common';
 import { CourseImageComponent } from '../course-image/course-image.component';
@@ -8,7 +8,8 @@ import { CourseImageComponent } from '../course-image/course-image.component';
   imports: [CommonModule],
   templateUrl: './course-card.component.html',
   styleUrl: './course-card.component.css',
-  standalone: true
+  standalone: true,
+  encapsulation: ViewEncapsulation.Emulated
 })
 export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   @Input({

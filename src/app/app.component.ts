@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryLis
 import {COURSES} from '../db-data';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
+import { HighlightedDirective } from './directives/highlighted.directive';
 
 @Component({
     selector: 'app-root',
@@ -11,7 +12,8 @@ import { CourseCardComponent } from './course-card/course-card.component';
 })
 export class AppComponent implements AfterViewInit{
     courses = [...COURSES];
-
+    @ViewChild(CourseCardComponent, {read: HighlightedDirective})
+    highlighted: HighlightedDirective;
     // startDate = new Date(2000,0,1);
     // title = this.courses[0].description
     // course = this.courses[0];
@@ -49,6 +51,10 @@ export class AppComponent implements AfterViewInit{
                 lessonsCount: 10
             }
         );
+    }
+
+    onToggle(isHighlighted: boolean){
+        console.log(isHighlighted);
     }
 }
 
