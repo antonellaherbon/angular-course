@@ -4,7 +4,9 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Course } from '../model/course';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
+  useFactory: (http) => new CoursesService(http),
+  deps: [HttpClient]
 })
 export class CoursesService {
 
