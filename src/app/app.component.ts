@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject, ChangeDetectorRef, DoCheck } from '@angular/core';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { HighlightedDirective } from './directives/highlighted.directive';
@@ -18,7 +18,7 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
     styleUrls: ['./app.component.css'],
     standalone: false,
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, DoCheck {
     courses: Course[];
 
     @ViewChild(CourseCardComponent, { read: HighlightedDirective })
@@ -40,8 +40,16 @@ export class AppComponent implements OnInit {
     @ViewChildren(CourseCardComponent, { read: ElementRef })
     cards: QueryList<CourseCardComponent>;
 
-    constructor(private coursesService: CoursesService
+    constructor(private coursesService: CoursesService,
+        private cd: ChangeDetectorRef
     ) { }
+
+    ngDoCheck() {
+        console.log("ngdocheck")
+        if(this.courses){
+            this.cd.markForCheck();
+        }
+    }
 
     ngOnInit() {
         this.loadCourses();
@@ -65,16 +73,12 @@ export class AppComponent implements OnInit {
             );
     }
 
-    onCourseEdited() {
-        this.courses.push({
-            id: 1,
-            description: "Angular Core Deep Dive",
-            iconUrl: 'https://s3-us-west-1.amazonaws.com/angular-university/course-images/angular-core-in-depth-small.png',
-            longDescription: "A detailed walk-through of the most important part of Angular - the Core and Common modules",
-            category: 'INTERMEDIATE',
-            lessonsCount: 10
-        }
-        );
+    onEditCourse(){
+        const course = this.courses[0];
+        const newCourse : any = {...course};
+
+        newCourse.description = 'New Value!'
+        this.courses[0] = newCourse;
     }
 
     onToggle(isHighlighted: boolean) {

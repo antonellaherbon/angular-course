@@ -6,7 +6,7 @@
 
     <div class="course-description">
 
-        Edit Title: <input #courseTitle [value]="course.description">
+        Edit Title: <input #courseTitle [value]="course.description" (keyup)="onTitleChange(courseTitle.value)">
 
     </div>
 

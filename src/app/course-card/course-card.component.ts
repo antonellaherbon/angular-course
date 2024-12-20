@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef, ViewEncapsulation } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef, ViewEncapsulation, ChangeDetectionStrategy, Attribute } from '@angular/core';
 import { Course } from '../model/course';
 import { CommonModule } from '@angular/common';
 import { CourseImageComponent } from '../course-image/course-image.component';
@@ -9,7 +9,8 @@ import { CourseImageComponent } from '../course-image/course-image.component';
   templateUrl: './course-card.component.html',
   styleUrl: './course-card.component.css',
   standalone: true,
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   @Input({
@@ -27,6 +28,11 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   
   @Input()
   noImageTpl: TemplateRef<any>;
+
+  /**
+   *
+   */
+  // constructor(@Attribute ('type') private type: string) {  }
   
   //@ContentChild --> decorator used to query for a single content element or component that is projected into the component's content area (via ng-content). 
   // @ContentChild(CourseImageComponent, {read: ElementRef})
@@ -56,5 +62,9 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   }
   ngAfterContentInit(): void {
     console.log(this.images)
+  }
+
+  onTitleChange(newTitle: string){
+    this.course.description = newTitle;
   }
 }

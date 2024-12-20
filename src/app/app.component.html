@@ -5,20 +5,10 @@
 </div>
 <div >
 
-    <!-- <div class="course-card">
-        test card
-    </div> -->
-    <!-- pipes -->
-    <!-- <div class="demo">
-        <div>Start Date: {{startDate | date: 'MM/dd/YYYY' }}</div>
-        <div>{{title | uppercase}}</div>
-        {{courses | json}} 
-        <div *ngFor="let pair of course | keyvalue">
-            {{pair.key + ': ' +pair.value}}
-        </div>
-    </div> -->
+    <div class="demo">
+        <button (click)="onEditCourse()">Edit Course</button>
+    </div>
 
-    <button (click)="onCourseEdited()">Edit Courses</button>
     <div class="courses" #container>
         <!-- @for(course of courses; track course.id; let first = $first; let last = $last){ -->
 
@@ -28,8 +18,8 @@
         </ng-template>
 
         <!-- el async es solo para observables, hacerlo en app component -->
-        <course-card *ngFor="let course of courses" #cardRef highlighted #highlighter="hl"
-            (toggleHighlight)=onToggle($event) (courseChanged)="save($event)" (courseSelected)="onCoureSelected($event)"
+        <course-card *ngFor="let course of courses" #cardRef (courseChanged)="save($event)" (courseSelected)="onCoureSelected($event)"
+        type="begginer"
             [class.is-first]="first" [class.is-last]="last" [course]="course" [noImageTpl]="blankImage">
 
             <course-image (dbclick)="highlighter.toggle()" [src]="course.iconUrl"></course-image>
