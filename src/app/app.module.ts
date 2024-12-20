@@ -8,6 +8,7 @@ import { CourseCardComponent } from './course-card/course-card.component';
 import { CourseImageComponent } from './course-image/course-image.component';
 
 import { HighlightedDirective } from './directives/highlighted.directive';
+import { provideHttpClient } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import { HighlightedDirective } from './directives/highlighted.directive';
     CourseImageComponent,
     HighlightedDirective
   ],
-  providers: [],
+  providers: [
+    provideHttpClient()
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

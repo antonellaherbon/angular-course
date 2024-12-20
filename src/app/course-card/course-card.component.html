@@ -1,13 +1,16 @@
-<div class="course-card" 
-[ngClass]="cardClasses()">
+<div class="course-card" [ngClass]="cardClasses()">
 
     <div class="course-title" [ngStyle]="cardStyles()">
         {{cardIndex || '' + ' ' + course.description}}
     </div>
 
+    <div class="course-description">
 
-    <ng-content select="course-image"
-        *ngIf="course.iconUrl; else noImage"></ng-content>
+        Edit Title: <input #courseTitle [value]="course.description">
+
+    </div>
+
+    <ng-content select="course-image" *ngIf="course.iconUrl; else noImage"></ng-content>
 
     <ng-template #noImage>
         <ng-container *ngTemplateOutlet="noImageTpl; context: {description: course.description}"></ng-container>
@@ -25,18 +28,18 @@
 
     <div class="course-category">
         @switch(course.category){
-            @case ("BEGINNER"){
-                <div class="category">Beginner</div>
-            }@case ("INTERMEDIATE"){
-                <div class="category">Intermediate</div>
-            }@case ("ADVANCED"){
-                <div class="category">Advanced</div>
-            }
-            @default{
-                <div class="category">Unknown</div>
-            }
+        @case ("BEGINNER"){
+        <div class="category">Beginner</div>
+        }@case ("INTERMEDIATE"){
+        <div class="category">Intermediate</div>
+        }@case ("ADVANCED"){
+        <div class="category">Advanced</div>
+        }
+        @default{
+        <div class="category">Unknown</div>
+        }
         }
     </div>
 
-    <button (click)="onCourseViewed()">View Course</button>
+    <button (click)="onSavedClicked(courseTitle.value)">Save Course</button>
 </div>

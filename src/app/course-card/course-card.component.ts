@@ -22,7 +22,7 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   
   @Input() cardIndex: number;
   
-  @Output()
+  @Output('courseChanged')
   courseSelected = new EventEmitter<Course>();
   
   @Input()
@@ -37,9 +37,8 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   @ContentChildren(CourseImageComponent)
   images: QueryList<CourseImageComponent>;
   
-  onCourseViewed() {
-    console.log("clicked")
-    this.courseSelected.emit(this.course);
+  onSavedClicked(description: string) {
+    this.courseSelected.emit({...this.course, description});
   }
   
   cardClasses() {

@@ -1,8 +1,9 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList } from '@angular/core';
-import {COURSES} from '../db-data';
+import { Component, ViewChild, ElementRef, AfterViewInit, ViewChildren, QueryList, OnInit } from '@angular/core';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { HighlightedDirective } from './directives/highlighted.directive';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { CoursesService } from './services/courses.service';
 
 @Component({
     selector: 'app-root',
@@ -10,8 +11,9 @@ import { HighlightedDirective } from './directives/highlighted.directive';
     styleUrls: ['./app.component.css'],
     standalone: false
 })
-export class AppComponent implements AfterViewInit{
-    courses = [...COURSES];
+export class AppComponent implements AfterViewInit, OnInit{
+    courses: Course[];
+
     @ViewChild(CourseCardComponent, {read: HighlightedDirective})
     highlighted: HighlightedDirective;
     // startDate = new Date(2000,0,1);
@@ -31,14 +33,37 @@ export class AppComponent implements AfterViewInit{
     @ViewChildren(CourseCardComponent, {read: ElementRef})
     cards: QueryList<CourseCardComponent>;
     
-    constructor() {
-                
+    constructor(private http: HttpClient, private coursesService: CoursesService) {
+        
     }
+
+
+    ngOnInit() {
+        this.loadCourses();
+    }
+    
+    loadCourses() {
+    this.coursesService.getCourses().subscribe(
+      (response) => {
+        this.courses = response.payload; 
+      },
+      (error) => {
+        console.error('Error fetching courses:', error);
+      }
+    )};
+
     ngAfterViewInit() {
-        console.log(this.cards)
+        // console.log(this.cards)
     }
 
     onCoureSelected(course:Course){
+    }
+
+    save(course: Course){
+        this.coursesService.saveCourse(course)
+        .subscribe(
+            () => console.log("course saved")
+        );
     }
 
     onCourseEdited(){
