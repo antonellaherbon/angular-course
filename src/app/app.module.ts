@@ -9,6 +9,7 @@ import { CourseImageComponent } from './course-image/course-image.component';
 
 import { HighlightedDirective } from './directives/highlighted.directive';
 import { provideHttpClient } from '@angular/common/http';
+import { FilterByCategoryPipe } from './filter-by-category.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { provideHttpClient } from '@angular/common/http';
     BrowserAnimationsModule,
     CourseCardComponent,
     CourseImageComponent,
-    HighlightedDirective
+    HighlightedDirective,
+    FilterByCategoryPipe
   ],
   providers: [
     provideHttpClient()

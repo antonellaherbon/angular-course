@@ -19,7 +19,7 @@
         </ng-template>
 
         <!-- el async es solo para observables, hacerlo en app component -->
-        <course-card *ngFor="let course of courses" #cardRef (courseChanged)="save($event)" (courseSelected)="onCoureSelected($event)"
+        <course-card *ngFor="let course of courses | filterByCategory: 'BEGINNER'" #cardRef (courseChanged)="save($event)" (courseSelected)="onCoureSelected($event)"
         type="begginer"
             [class.is-first]="first" [class.is-last]="last" [course]="course" [noImageTpl]="blankImage">
 
