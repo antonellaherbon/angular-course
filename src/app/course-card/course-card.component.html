@@ -27,18 +27,15 @@
     </div>
 
     <div class="course-category">
-        @switch(course.category){
-        @case ("BEGINNER"){
-        <div class="category">Beginner</div>
-        }@case ("INTERMEDIATE"){
-        <div class="category">Intermediate</div>
-        }@case ("ADVANCED"){
-        <div class="category">Advanced</div>
-        }
-        @default{
-        <div class="category">Unknown</div>
-        }
-        }
+        <div class="category" i18n>
+            {
+                course.category, 
+                select,
+                BEGINNER {Beginner}
+                INTERMEDIATE {Intermediate}
+                ADVANCED {Advanced}
+            }
+        </div>
     </div>
 
     <button (click)="onSavedClicked(courseTitle.value)">Save Course</button>

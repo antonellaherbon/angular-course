@@ -22,6 +22,8 @@ import { COURSES } from 'src/db-data';
 export class AppComponent implements OnInit  {
     courses: Course[];
 
+    totalCourses = 0;
+
     @ViewChild(CourseCardComponent, { read: HighlightedDirective })
     highlighted: HighlightedDirective;
     // startDate = new Date(2000,0,1);
@@ -47,22 +49,24 @@ export class AppComponent implements OnInit  {
     ngOnInit() {
         this.loadCourses();
     }
-
+    
     loadCourses() {
         this.coursesService.getCourses().subscribe(
             (response) => {
                 this.courses = response.payload;
+                this.totalCourses = this.courses.length;
+                console.log("totalcourses", this.totalCourses)
             },
             (error) => {
                 console.error('Error fetching courses:', error);
             }
         )
     };
-
+    
     save(course: Course) {
         this.coursesService.saveCourse(course)
-            .subscribe(
-                () => console.log("course saved")
+        .subscribe(
+            () => console.log("course saved")
             );
     }
 

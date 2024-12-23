@@ -21,7 +21,9 @@ export class CoursesService {
   }
 
   saveCourse(course: Course){
-    const headers = new HttpHeaders()
+    const headers = new HttpHeaders({
+      'Accept-Language': 'es-AR'
+    })
       .set("X-Auth", "userId");
 
     return this.http.put(`/api/courses/${course.id}`, course, {headers});

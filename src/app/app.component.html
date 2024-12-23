@@ -1,30 +1,37 @@
 <div class="top-menu">
-
+    
     <img class="logo" src="https://angular-academy.s3.amazonaws.com/main-logo/main-page-logo-small-hat.png">
-
+    
 </div>
 <div >
-
+    
     <div class="demo">
-        <button (click)="onEditCourse()">Edit Course</button>
+        <h4 i18n="welcome message|Greet the user a greeting at the beginning of the course. @@welcomeMessage">Welcome to the Angular Core Deep Dive Course</h4>
+        <button (click)="onEditCourse()" i18n>Edit Course</button>
         <button (click)="onDestroy()">Destroy Course</button>
+        <p i18n>{ totalCourses, plural, 
+            =0 {No courses available.}
+            =1 {One course is available.}
+            other {A total of {{totalCourses}} courses are available}}
+        </p>
+        
     </div>
-
+    
     <div class="courses" #container>
         <!-- @for(course of courses; track course.id; let first = $first; let last = $last){ -->
-
+        
         <ng-template #blankImage let-courseName="description">
             <p class="warn"> {{courseName}} has no image available!</p>
             <img src="/assets/empty-image.png" alt="Empty Image">
         </ng-template>
-
+        
         <!-- el async es solo para observables, hacerlo en app component -->
-        <course-card *ngFor="let course of courses | filterByCategory: 'BEGINNER'" #cardRef (courseChanged)="save($event)" (courseSelected)="onCoureSelected($event)"
+        <course-card *ngFor="let course of courses" #cardRef (courseChanged)="save($event)" (courseSelected)="onCoureSelected($event)"
         type="begginer"
-            [class.is-first]="first" [class.is-last]="last" [course]="course" [noImageTpl]="blankImage">
-
-            <course-image (dbclick)="highlighter.toggle()" [src]="course.iconUrl"></course-image>
-        </course-card>
+        [class.is-first]="first" [class.is-last]="last" [course]="course" [noImageTpl]="blankImage">
+        
+        <course-image (dbclick)="highlighter.toggle()" [src]="course.iconUrl"></course-image>
+    </course-card>
         <!-- } -->
         <!-- @empty{ -->
         <!-- <h1>No courses found!</h1> -->
