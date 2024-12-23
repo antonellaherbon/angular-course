@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef, ViewEncapsulation, ChangeDetectionStrategy, Attribute } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef, ViewEncapsulation, ChangeDetectionStrategy, Attribute, OnChanges, OnDestroy, AfterContentChecked, AfterViewChecked } from '@angular/core';
 import { Course } from '../model/course';
 import { CommonModule } from '@angular/common';
 import { CourseImageComponent } from '../course-image/course-image.component';
@@ -12,7 +12,7 @@ import { CourseImageComponent } from '../course-image/course-image.component';
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseCardComponent implements AfterViewInit, AfterContentInit {
+export class CourseCardComponent implements AfterViewInit, AfterContentInit, OnChanges, OnDestroy, AfterContentChecked, AfterViewChecked {
   @Input({
     required: true
   }) course: Course;
@@ -59,12 +59,31 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   
   ngAfterViewInit() {
     // console.log(this.image);
+    console.log("after view init")
   }
-  ngAfterContentInit(): void {
-    console.log(this.images)
+  
+  ngAfterContentInit() {
+    // console.log(this.images)
+    console.log("after content init")
   }
 
   onTitleChange(newTitle: string){
     this.course.description = newTitle;
+  }
+
+  ngOnDestroy() {
+    console.log("ngDestroy")    
+  }
+
+  ngOnChanges(changes) {
+      console.log("onChanges", changes);
+  }
+
+  ngAfterContentChecked() {
+    console.log("after content checked");
+  }
+
+  ngAfterViewChecked(): void {
+    console.log("view checked")
   }
 }

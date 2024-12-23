@@ -1,10 +1,11 @@
-import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject, ChangeDetectorRef, DoCheck } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject, ChangeDetectorRef, DoCheck, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { HighlightedDirective } from './directives/highlighted.directive';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { CoursesService } from './services/courses.service';
 import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
+import { COURSES } from 'src/db-data';
 
 // function coursesServiceProvider(http: HttpClient): CoursesService {
 //     return new CoursesService(http);
@@ -18,7 +19,7 @@ import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
     styleUrls: ['./app.component.css'],
     standalone: false,
 })
-export class AppComponent implements OnInit, DoCheck {
+export class AppComponent implements OnInit  {
     courses: Course[];
 
     @ViewChild(CourseCardComponent, { read: HighlightedDirective })
@@ -40,16 +41,8 @@ export class AppComponent implements OnInit, DoCheck {
     @ViewChildren(CourseCardComponent, { read: ElementRef })
     cards: QueryList<CourseCardComponent>;
 
-    constructor(private coursesService: CoursesService,
-        private cd: ChangeDetectorRef
+    constructor(private coursesService: CoursesService
     ) { }
-
-    ngDoCheck() {
-        console.log("ngdocheck")
-        if(this.courses){
-            this.cd.markForCheck();
-        }
-    }
 
     ngOnInit() {
         this.loadCourses();
@@ -77,12 +70,16 @@ export class AppComponent implements OnInit, DoCheck {
         const course = this.courses[0];
         const newCourse : any = {...course};
 
-        newCourse.description = 'New Value!'
+        newCourse.description = 'ngOnChanges'
         this.courses[0] = newCourse;
     }
 
     onToggle(isHighlighted: boolean) {
         console.log(isHighlighted);
+    }
+
+    onDestroy(){
+        this.courses = [undefined]
     }
 }
 
