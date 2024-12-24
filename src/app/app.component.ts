@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject, ChangeDetectorRef, DoCheck, OnDestroy, OnChanges, SimpleChanges, Injector } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject, ChangeDetectorRef, DoCheck, OnDestroy, OnChanges, SimpleChanges, Injector, signal, computed, effect, EffectRef } from '@angular/core';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { HighlightedDirective } from './directives/highlighted.directive';
@@ -11,12 +11,7 @@ import { CourseTitleComponent } from './course-title/course-title.component';
 import { CommonModule } from '@angular/common';
 import { CourseImageComponent } from './course-image/course-image.component';
 import { FilterByCategoryPipe } from './filter-by-category.pipe';
-
-// function coursesServiceProvider(http: HttpClient): CoursesService {
-//     return new CoursesService(http);
-// }
-
-// export const COURSES_SERVICE = new InjectionToken<CoursesService>('COURSES_SERVICE');
+import { CounterService } from './counter-service';
 
 @Component({
     selector: 'app-root',
@@ -30,7 +25,7 @@ import { FilterByCategoryPipe } from './filter-by-category.pipe';
         CourseTitleComponent
     ]
 })
-export class AppComponent implements OnInit  {
+export class AppComponent implements OnInit {
     courses: Course[];
 
     totalCourses = 0;
@@ -54,16 +49,32 @@ export class AppComponent implements OnInit  {
     @ViewChildren(CourseCardComponent, { read: ElementRef })
     cards: QueryList<CourseCardComponent>;
 
+
+    effectRef : EffectRef;
+
     constructor(private coursesService: CoursesService,
-        private injector: Injector
-    ) { }
+        private injector: Injector,
+        public counterService: CounterService
+    ) {
+        // this.effectRef = effect((onCleanUp) => {
+        //     onCleanUp(() =>{
+        //         console.log("cleanup occurred")
+        //     })
+        //     const counterValue = this.counter();
+        //     const derivedCounterValue = this.derivedCounter();
+
+        //     console.log(`counter: ${counterValue} derived counter: ${derivedCounterValue}`)
+        // },{
+        //     manualCleanup: true
+        // })
+    }
 
     ngOnInit() {
         this.loadCourses();
-        const htmlElement = createCustomElement(CourseTitleComponent, {injector: this.injector});
+        const htmlElement = createCustomElement(CourseTitleComponent, { injector: this.injector });
         customElements.define('course-title', htmlElement);
     }
-    
+
     loadCourses() {
         this.coursesService.getCourses().subscribe(
             (response) => {
@@ -76,17 +87,17 @@ export class AppComponent implements OnInit  {
             }
         )
     };
-    
+
     save(course: Course) {
         this.coursesService.saveCourse(course)
-        .subscribe(
-            () => console.log("course saved")
+            .subscribe(
+                () => console.log("course saved")
             );
     }
 
-    onEditCourse(){
+    onEditCourse() {
         const course = this.courses[0];
-        const newCourse : any = {...course};
+        const newCourse: any = { ...course };
 
         newCourse.description = 'ngOnChanges'
         this.courses[0] = newCourse;
@@ -96,8 +107,21 @@ export class AppComponent implements OnInit  {
         console.log(isHighlighted);
     }
 
-    onDestroy(){
+    onDestroy() {
         this.courses = [undefined]
+    }
+
+    derivedCounter = computed(() => {
+        const counter = this.counterService.counter();
+        return counter * 10;
+    })
+
+    increment() {
+        this.counterService.increment();
+    }
+
+    onCleanUp(){
+        this.effectRef.destroy();
     }
 }
 

@@ -18,6 +18,14 @@
 
     </div>
 
+    <div>
+        <h2>Counter value: {{counterService.counter()}}</h2>
+        <h2>Derived value: {{derivedCounter() }}</h2>
+
+        <button (click)="increment()">Increment</button>
+        <button (click)="onCleanUp()">Clean</button>
+    </div>
+
     <div class="demo-triggers">
         <button #display>Trigger Display</button>
     </div>

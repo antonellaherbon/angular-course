@@ -1,4 +1,4 @@
-import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef, ViewEncapsulation, ChangeDetectionStrategy, Attribute, OnChanges, OnDestroy, AfterContentChecked, AfterViewChecked } from '@angular/core';
+import { Component, Input, EventEmitter, Output, ViewChild, AfterViewInit, ContentChild, ElementRef, ContentChildren, AfterContentInit, QueryList, TemplateRef, ViewEncapsulation, ChangeDetectionStrategy, Attribute, OnChanges, OnDestroy, AfterContentChecked, AfterViewChecked, input } from '@angular/core';
 import { Course } from '../model/course';
 import { CommonModule } from '@angular/common';
 import { CourseImageComponent } from '../course-image/course-image.component';
@@ -12,11 +12,11 @@ import { CourseImageComponent } from '../course-image/course-image.component';
   encapsulation: ViewEncapsulation.Emulated,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CourseCardComponent implements AfterViewInit, AfterContentInit, OnChanges, OnDestroy, AfterContentChecked, AfterViewChecked {
-  @Input({
-    required: true
-  }) course: Course;
-  
+export class CourseCardComponent {
+  // @Input({
+  //   required: true
+  // }) course: Course;
+  course = input<Course>(null);  
   @Input({
     required: true
   }) index: number
@@ -44,11 +44,11 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit, OnC
   images: QueryList<CourseImageComponent>;
   
   onSavedClicked(description: string) {
-    this.courseSelected.emit({...this.course, description});
+    this.courseSelected.emit({...this.course(), description});
   }
   
   cardClasses() {
-    if (this.course.category == "BEGINNER") {
+    if (this.course().category == "BEGINNER") {
       return 'begginer';
     }
   }
@@ -57,33 +57,8 @@ export class CourseCardComponent implements AfterViewInit, AfterContentInit, OnC
     return { 'text-decoration': 'underline' };
   }
   
-  ngAfterViewInit() {
-    // console.log(this.image);
-    console.log("after view init")
-  }
-  
-  ngAfterContentInit() {
-    // console.log(this.images)
-    console.log("after content init")
-  }
 
   onTitleChange(newTitle: string){
-    this.course.description = newTitle;
-  }
-
-  ngOnDestroy() {
-    console.log("ngDestroy")    
-  }
-
-  ngOnChanges(changes) {
-      console.log("onChanges", changes);
-  }
-
-  ngAfterContentChecked() {
-    console.log("after content checked");
-  }
-
-  ngAfterViewChecked(): void {
-    console.log("view checked")
+    this.course().description = newTitle;
   }
 }
