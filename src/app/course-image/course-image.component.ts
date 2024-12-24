@@ -4,7 +4,8 @@ import { Component, Input } from '@angular/core';
   selector: 'course-image',
   imports: [],
   templateUrl: './course-image.component.html',
-  styleUrl: './course-image.component.css'
+  styleUrl: './course-image.component.css',
+  standalone: true
 })
 export class CourseImageComponent {
   @Input('src')

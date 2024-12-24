@@ -2,7 +2,8 @@ import { Directive, EventEmitter, HostBinding, HostListener, Input, Output } fro
 
 @Directive({
   selector: '[highlighted]',
-  exportAs: 'hl'
+  exportAs: 'hl',
+  standalone: true
 })
 export class HighlightedDirective {
   @Input('highlighted')

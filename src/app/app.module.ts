@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,22 +10,22 @@ import { CourseImageComponent } from './course-image/course-image.component';
 import { HighlightedDirective } from './directives/highlighted.directive';
 import { provideHttpClient } from '@angular/common/http';
 import { FilterByCategoryPipe } from './filter-by-category.pipe';
+import { CourseTitleComponent } from './course-title/course-title.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
   ],
   imports: [
+    AppComponent,
     BrowserModule,
     BrowserAnimationsModule,
-    CourseCardComponent,
-    CourseImageComponent,
     HighlightedDirective,
     FilterByCategoryPipe
   ],
   providers: [
     provideHttpClient()
   ],
-  bootstrap: [AppComponent]
+  // bootstrap: [AppComponent],
+  // schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

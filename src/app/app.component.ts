@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject, ChangeDetectorRef, DoCheck, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, ViewChild, ElementRef, ViewChildren, QueryList, OnInit, InjectionToken, Inject, ChangeDetectorRef, DoCheck, OnDestroy, OnChanges, SimpleChanges, Injector } from '@angular/core';
 import { Course } from './model/course';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { HighlightedDirective } from './directives/highlighted.directive';
@@ -6,6 +6,11 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { CoursesService } from './services/courses.service';
 import { APP_CONFIG, AppConfig, CONFIG_TOKEN } from './config';
 import { COURSES } from 'src/db-data';
+import { createCustomElement } from '@angular/elements';
+import { CourseTitleComponent } from './course-title/course-title.component';
+import { CommonModule } from '@angular/common';
+import { CourseImageComponent } from './course-image/course-image.component';
+import { FilterByCategoryPipe } from './filter-by-category.pipe';
 
 // function coursesServiceProvider(http: HttpClient): CoursesService {
 //     return new CoursesService(http);
@@ -17,7 +22,13 @@ import { COURSES } from 'src/db-data';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.css'],
-    standalone: false,
+    standalone: true,
+    imports: [
+        CommonModule,
+        CourseCardComponent,
+        CourseImageComponent,
+        CourseTitleComponent
+    ]
 })
 export class AppComponent implements OnInit  {
     courses: Course[];
@@ -43,11 +54,14 @@ export class AppComponent implements OnInit  {
     @ViewChildren(CourseCardComponent, { read: ElementRef })
     cards: QueryList<CourseCardComponent>;
 
-    constructor(private coursesService: CoursesService
+    constructor(private coursesService: CoursesService,
+        private injector: Injector
     ) { }
 
     ngOnInit() {
         this.loadCourses();
+        const htmlElement = createCustomElement(CourseTitleComponent, {injector: this.injector});
+        customElements.define('course-title', htmlElement);
     }
     
     loadCourses() {
